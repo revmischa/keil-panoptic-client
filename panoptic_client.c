@@ -13,6 +13,9 @@ U16 static poc_tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par);
 static void poc_create_client_socket(void);
 static void poc_client_tcp_connect(void);
 void poc_parse_message(U8 *msg_str, U16 msg_len);
+void poc_send_string (char *sendbuf, U16 maxlen);
+void poc_send_command(char *command, json_t *params);
+void poc_handle_command(message *msg);
 
 void init_poc(void) {
 	// create main panoptic client task
@@ -180,7 +183,7 @@ void poc_parse_message(U8 *msg_str, U16 msg_len) {
 	if (! msg_json) {
 		printf("Failed to parse message");
 		if (err.text != NULL) {
-			printf(": error: %s", err.text);
+			printf(": error: %s", err.text); 
 		}
 		printf("\n");
 
@@ -188,15 +191,50 @@ void poc_parse_message(U8 *msg_str, U16 msg_len) {
 	}
 
 	msg = int80_alloc_message();
-	if (int80_parse_message(msg_json, msg)) {
+	if (int80_parse_message(msg_json, msg) && msg != NULL) {
 		// got a message we can use!
 		printf("parse success!!!! command=%s\n", msg->command);
+		poc_handle_command(msg);
 	} else {
 		printf("Did not receive a message we understood\n");
 	}
 
 	int80_free_message(msg);
 	json_decref(msg_json);
+}
+
+void poc_handle_command(message *msg) {
+	if (strcmp(msg->command, "ping")) {
+		poc_send_command("pong", NULL);
+	} else {
+		printf("Got unknown command: %s\n", msg->command);
+	}
+}
+
+// TODO: make sure socket is in proper state
+void poc_send_command(char *command, json_t *params) {
+	char *msg_str;
+	json_t *msg;
+
+	msg = json_object();
+	json_object_set(msg, "command", json_string(command));
+	
+	msg_str = json_dumps((const json_t *)msg, 0);
+	json_decref(msg);
+
+	if (msg_str) {
+		poc_send_string(msg_str, strlen(msg_str));
+	} else {
+		printf("Error serializing JSON. Command=%s\n", command); 
+	}
+}
+
+void poc_send_string (char *databuf, U16 maxlen) {
+	U8 *sendbuf;
+	maxlen = tcp_max_dsize(client_sock);
+    sendbuf = tcp_get_buf(maxlen);
+	memcpy(sendbuf, databuf, maxlen);
+	tcp_send(client_sock, sendbuf, maxlen);
 }
 
 void abort(void) {

@@ -1,19 +1,13 @@
-/*----------------------------------------------------------------------------
- *      RL-ARM - TCPnet
- *----------------------------------------------------------------------------
- *      Name:    HTTP_DEMO.C
- *      Purpose: HTTP Server demo example
- *----------------------------------------------------------------------------
- *      This code is part of the RealView Run-Time Library.
- *      Copyright (c) 2004-2009 KEIL - An ARM Company. All rights reserved.
- *---------------------------------------------------------------------------*/
+/*
+    panoptic client
+*/
 
 #include <stdio.h>
 #include <RTL.h>
 #include <Net_Config.h>
 #include <LM3Sxxxx.H>
 #include <string.h>
-#include "..\..\rit128x96x4.h"
+#include "drivers/rit128x96x4.h"
 #include "panoptic_client.h"
 #include "common.h"
 #include "main.h"
