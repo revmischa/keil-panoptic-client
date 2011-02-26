@@ -222,19 +222,27 @@ void poc_send_command(char *command, json_t *params) {
 	msg_str = json_dumps((const json_t *)msg, 0);
 	json_decref(msg);
 
-	if (msg_str) {
+	if (msg_str && strlen(msg_str)) {					
 		poc_send_string(msg_str, strlen(msg_str));
+		free(msg_str);
 	} else {
 		printf("Error serializing JSON. Command=%s\n", command); 
 	}
 }
 
-void poc_send_string (char *databuf, U16 maxlen) {
+void poc_send_string (char *databuf, U16 datalen) {
 	U8 *sendbuf;
-	maxlen = tcp_max_dsize(client_sock);
-    sendbuf = tcp_get_buf(maxlen);
-	memcpy(sendbuf, databuf, maxlen);
-	tcp_send(client_sock, sendbuf, maxlen);
+	U16 maxlen = tcp_max_dsize(client_sock);
+
+	if (datalen > maxlen) {
+		// TODO: fragment message
+	}
+
+	printf("sending message size=%u msg=%s\n\n", datalen, databuf);
+
+    sendbuf = tcp_get_buf(datalen);
+	memcpy(sendbuf, databuf, datalen);
+	tcp_send(client_sock, sendbuf, datalen);
 }
 
 void abort(void) {

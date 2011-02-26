@@ -159,7 +159,7 @@ static void init_display () {
   /* OLED Module init */
 
   RIT128x96x4Init(1000000);
-  upd_display ();
+  upd_display ();					 
 }
 
 
