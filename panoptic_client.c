@@ -191,20 +191,23 @@ void poc_parse_message(U8 *msg_str, U16 msg_len) {
 	}
 
 	msg = int80_alloc_message();
-	if (int80_parse_message(msg_json, msg) && msg != NULL) {
+	if (int80_parse_message(msg_json, msg)) {
 		// got a message we can use!
-		printf("parse success!!!! command=%s\n", msg->command);
+		printf("parse success!!!! command='%s' len=%u\n", msg->command, strlen(msg->command));
 		poc_handle_command(msg);
-	} else {
+	} else {											  
 		printf("Did not receive a message we understood\n");
 	}
-
+	
+	printf("freeing message. refcnt=%d\n", msg->params->refcount);
 	int80_free_message(msg);
+	printf("decref\n");
 	json_decref(msg_json);
+	printf("decref done\n");												
 }
 
 void poc_handle_command(message *msg) {
-	if (strcmp(msg->command, "ping")) {
+	if (strcmp(msg->command, "ping") == 0) {
 		poc_send_command("pong", NULL);
 	} else {
 		printf("Got unknown command: %s\n", msg->command);
@@ -217,13 +220,13 @@ void poc_send_command(char *command, json_t *params) {
 	json_t *msg;
 
 	msg = json_object();
-	json_object_set(msg, "command", json_string(command));
+	json_object_set_new(msg, "command", json_string(command));
 	
 	msg_str = json_dumps((const json_t *)msg, 0);
 	json_decref(msg);
 
 	if (msg_str && strlen(msg_str)) {					
-		poc_send_string(msg_str, strlen(msg_str));
+		//poc_send_string(msg_str, strlen(msg_str));
 		free(msg_str);
 	} else {
 		printf("Error serializing JSON. Command=%s\n", command); 
@@ -243,6 +246,7 @@ void poc_send_string (char *databuf, U16 datalen) {
     sendbuf = tcp_get_buf(datalen);
 	memcpy(sendbuf, databuf, datalen);
 	tcp_send(client_sock, sendbuf, datalen);
+	printf("message sent\n");
 }
 
 void abort(void) {
