@@ -554,34 +554,6 @@
           <GroupName>Library</GroupName>
           <Files>
             <File>
-              <FileName>TCP_CM3.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>C:\Keil\ARM\RV31\LIB\TCP_CM3.lib</FilePath>
-            </File>
-            <File>
-              <FileName>TCPD_CM3.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>C:\Keil\ARM\RV31\LIB\TCPD_CM3.lib</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                </CommonProperty>
-                <FileArmAds/>
-              </FileOption>
-            </File>
-            <File>
               <FileName>DriverLib.lib</FileName>
               <FileType>4</FileType>
               <FilePath>C:\Keil\ARM\RV31\LIB\Luminary\DriverLib.lib</FilePath>
@@ -589,12 +561,12 @@
             <File>
               <FileName>LM3S_EMAC.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\TCPnet\Library\LM3S_EMAC.c</FilePath>
+              <FilePath>C:\Keil\ARM\Boards\Luminary\ek-lm3s8962\RL\TCPnet\Library\LM3S_EMAC.c</FilePath>
             </File>
             <File>
               <FileName>rit128x96x4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\rit128x96x4.c</FilePath>
+              <FilePath>C:\Keil\ARM\Boards\Luminary\ek-lm3s8962\rit128x96x4.c</FilePath>
             </File>
             <File>
               <FileName>ustdlib.c</FileName>
@@ -610,6 +582,51 @@
               <FileName>jansson.lib</FileName>
               <FileType>4</FileType>
               <FilePath>.\jansson.lib</FilePath>
+            </File>
+            <File>
+              <FileName>TCPD_CM3.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\luminary\RV31\LIB\TCPD_CM3.lib</FilePath>
+            </File>
+            <File>
+              <FileName>TCP_CM3.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\luminary\RV31\LIB\TCP_CM3.lib</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>jansson</GroupName>
+          <Files>
+            <File>
+              <FileName>dump.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\dump.c</FilePath>
+            </File>
+            <File>
+              <FileName>hashtable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\hashtable.c</FilePath>
+            </File>
+            <File>
+              <FileName>load.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\load.c</FilePath>
+            </File>
+            <File>
+              <FileName>strbuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\strbuffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>utf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\utf.c</FilePath>
+            </File>
+            <File>
+              <FileName>value.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\value.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -658,7 +675,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>0</BrowseInformation>
+          <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\Lst\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -940,7 +957,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>0</OneElfS>
@@ -949,13 +966,13 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>0</wLevel>
+            <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>RTX_KERNEL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Library;C:\StellarisWare;jansson</IncludePath>
+              <IncludePath>..\Library;C:\StellarisWare;jansson;C:\StellarisWare\boards\ek-lm3s8962;..\luminary\RL\TCPnet\SRC</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1158,9 +1175,34 @@
           <GroupName>Library</GroupName>
           <Files>
             <File>
-              <FileName>TCP_CM3.lib</FileName>
+              <FileName>DriverLib.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>C:\Keil\ARM\RV31\LIB\TCP_CM3.lib</FilePath>
+              <FilePath>C:\Keil\ARM\RV31\LIB\Luminary\DriverLib.lib</FilePath>
+            </File>
+            <File>
+              <FileName>LM3S_EMAC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>C:\Keil\ARM\Boards\Luminary\ek-lm3s8962\RL\TCPnet\Library\LM3S_EMAC.c</FilePath>
+            </File>
+            <File>
+              <FileName>rit128x96x4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>C:\Keil\ARM\Boards\Luminary\ek-lm3s8962\rit128x96x4.c</FilePath>
+            </File>
+            <File>
+              <FileName>ustdlib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>C:\StellarisWare\utils\ustdlib.c</FilePath>
+            </File>
+            <File>
+              <FileName>uartstdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>C:\StellarisWare\utils\uartstdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>jansson.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>.\jansson.lib</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1183,37 +1225,83 @@
             <File>
               <FileName>TCPD_CM3.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>C:\Keil\ARM\RV31\LIB\TCPD_CM3.lib</FilePath>
+              <FilePath>..\luminary\RV31\LIB\TCPD_CM3.lib</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                </CommonProperty>
+                <FileArmAds/>
+              </FileOption>
             </File>
             <File>
-              <FileName>DriverLib.lib</FileName>
+              <FileName>TCP_CM3.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>C:\Keil\ARM\RV31\LIB\Luminary\DriverLib.lib</FilePath>
+              <FilePath>..\luminary\RV31\LIB\TCP_CM3.lib</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                </CommonProperty>
+                <FileArmAds/>
+              </FileOption>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>jansson</GroupName>
+          <Files>
             <File>
-              <FileName>LM3S_EMAC.c</FileName>
+              <FileName>dump.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\TCPnet\Library\LM3S_EMAC.c</FilePath>
+              <FilePath>..\jansson\dump.c</FilePath>
             </File>
             <File>
-              <FileName>rit128x96x4.c</FileName>
+              <FileName>hashtable.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\rit128x96x4.c</FilePath>
+              <FilePath>..\jansson\hashtable.c</FilePath>
             </File>
             <File>
-              <FileName>ustdlib.c</FileName>
+              <FileName>load.c</FileName>
               <FileType>1</FileType>
-              <FilePath>C:\StellarisWare\utils\ustdlib.c</FilePath>
+              <FilePath>..\jansson\load.c</FilePath>
             </File>
             <File>
-              <FileName>uartstdio.c</FileName>
+              <FileName>strbuffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>C:\StellarisWare\utils\uartstdio.c</FilePath>
+              <FilePath>..\jansson\strbuffer.c</FilePath>
             </File>
             <File>
-              <FileName>jansson.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>.\jansson.lib</FilePath>
+              <FileName>utf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\utf.c</FilePath>
+            </File>
+            <File>
+              <FileName>value.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\value.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1728,34 +1816,6 @@
           <GroupName>Library</GroupName>
           <Files>
             <File>
-              <FileName>TCP_CM3.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>C:\Keil\ARM\RV31\LIB\TCP_CM3.lib</FilePath>
-            </File>
-            <File>
-              <FileName>TCPD_CM3.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>C:\Keil\ARM\RV31\LIB\TCPD_CM3.lib</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                </CommonProperty>
-                <FileArmAds/>
-              </FileOption>
-            </File>
-            <File>
               <FileName>DriverLib.lib</FileName>
               <FileType>4</FileType>
               <FilePath>C:\Keil\ARM\RV31\LIB\Luminary\DriverLib.lib</FilePath>
@@ -1763,12 +1823,12 @@
             <File>
               <FileName>LM3S_EMAC.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\TCPnet\Library\LM3S_EMAC.c</FilePath>
+              <FilePath>C:\Keil\ARM\Boards\Luminary\ek-lm3s8962\RL\TCPnet\Library\LM3S_EMAC.c</FilePath>
             </File>
             <File>
               <FileName>rit128x96x4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\rit128x96x4.c</FilePath>
+              <FilePath>C:\Keil\ARM\Boards\Luminary\ek-lm3s8962\rit128x96x4.c</FilePath>
             </File>
             <File>
               <FileName>ustdlib.c</FileName>
@@ -1784,6 +1844,105 @@
               <FileName>jansson.lib</FileName>
               <FileType>4</FileType>
               <FilePath>.\jansson.lib</FilePath>
+            </File>
+            <File>
+              <FileName>TCPD_CM3.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\luminary\RV31\LIB\TCPD_CM3.lib</FilePath>
+            </File>
+            <File>
+              <FileName>TCP_CM3.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\luminary\RV31\LIB\TCP_CM3.lib</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>jansson</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>dump.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\dump.c</FilePath>
+            </File>
+            <File>
+              <FileName>hashtable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\hashtable.c</FilePath>
+            </File>
+            <File>
+              <FileName>load.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\load.c</FilePath>
+            </File>
+            <File>
+              <FileName>strbuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\strbuffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>utf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\utf.c</FilePath>
+            </File>
+            <File>
+              <FileName>value.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\jansson\value.c</FilePath>
             </File>
           </Files>
         </Group>

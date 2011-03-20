@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <RTL.h>
-#include <Net_Config.h>
+#include "Net_Config.h"
 #include <LM3Sxxxx.H>
 #include <string.h>
 #include "drivers/rit128x96x4.h"
@@ -204,7 +204,8 @@ static void dhcp_check () {
 }
 
 void status(U8 lineNum, char *status) {
-	sprintf((char *)lcd_text[lineNum], status);
+	printf("setting status=%s\n", status);
+	strncpy((char *)lcd_text[lineNum], status, STATUS_MAX+1);
 	update_display();
 }
 

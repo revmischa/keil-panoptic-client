@@ -12,9 +12,9 @@ static void poc_client_main(void);
 U16 static poc_tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par);
 static void poc_create_client_socket(void);
 static void poc_client_tcp_connect(void);
-void poc_parse_message(U8 *msg_str, U16 msg_len);
-void poc_send_string (char *sendbuf, U16 maxlen);
-void poc_send_command(char *command, json_t *params);
+void poc_parse_message(const U8 *msg_str, U16 msg_len);
+void poc_send_string (const char *sendbuf, U16 maxlen);
+void poc_send_command(const char *command, const json_t *params);
 void poc_handle_command(message *msg);
 
 void init_poc(void) {
@@ -53,7 +53,7 @@ __task void poc_task(void) {
     // start by looking up the server IP address
 	get_host_by_name(poc_server_hostname, poc_server_dns_handler);
 
-	//printf("Panoptic client started\n");
+	printf("Panoptic client started\n");
 
 	while (1) {
 		poc_client_main();
@@ -142,7 +142,7 @@ U16 static poc_tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par) {
 	  recv_data = malloc(par+1);
 	  memcpy(recv_data, ptr, par);
 	  recv_data[par] = '\0';
-	  memcpy(lcd_text[5], recv_data, STATUS_MAX);
+	  status(5, (char *)recv_data);
 	  lcd_text[5][STATUS_MAX] = '\0';
 	  update_display();
 	  printf("Got data: %s\n", recv_data);
@@ -174,12 +174,13 @@ U16 static poc_tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par) {
   return (0);
 }
 
-void poc_parse_message(U8 *msg_str, U16 msg_len) {
+void poc_parse_message(const U8 *msg_str, U16 msg_len) {
 	json_t *msg_json;
 	json_error_t err;
 	message *msg;
 
-	msg_json = json_loads((const char *)msg_str, &err);
+	// parse json into object
+	msg_json = json_loads((char *)msg_str, &err);
 	if (! msg_json) {
 		printf("Failed to parse message");
 		if (err.text != NULL) {
@@ -190,20 +191,25 @@ void poc_parse_message(U8 *msg_str, U16 msg_len) {
 		return;
 	}
 
+	// create message object
 	msg = int80_alloc_message();
+	printf("msg 1 =%X\n", msg);	 
 	if (int80_parse_message(msg_json, msg)) {
+		printf("msg 2 =%X\n", msg);
 		// got a message we can use!
-		printf("parse success!!!! command='%s' len=%u\n", msg->command, strlen(msg->command));
+		status(5, "before parsing...");
+		printf("parse success!!!! &command=%X, command='%s' len=%u, json refcount=%d\n", msg->command, msg->command, strlen(msg->command), msg_json->refcount);			  
+		status(5, msg->command);
 		poc_handle_command(msg);
 	} else {											  
 		printf("Did not receive a message we understood\n");
-	}
+	}		
 	
-	printf("freeing message. refcnt=%d\n", msg->params->refcount);
+	printf("freeing message=%X. params=%X, params refcnt=%d\n", msg, msg->params, msg->params->refcount);
 	int80_free_message(msg);
-	printf("decref\n");
+	printf("decref, msg_json=%X, refcnt=%d\n", msg_json, msg_json->refcount);
 	json_decref(msg_json);
-	printf("decref done\n");												
+	printf("decref done\n\n");												
 }
 
 void poc_handle_command(message *msg) {
@@ -211,29 +217,39 @@ void poc_handle_command(message *msg) {
 		poc_send_command("pong", NULL);
 	} else {
 		printf("Got unknown command: %s\n", msg->command);
+		return;
 	}
 }
 
 // TODO: make sure socket is in proper state
-void poc_send_command(char *command, json_t *params) {
+void poc_send_command(const char *command, const json_t *params) {
 	char *msg_str;
 	json_t *msg;
 
+	ASSERT(msg);
+
+	// construct json object
 	msg = json_object();
-	json_object_set_new(msg, "command", json_string(command));
+	if (json_object_set_new(msg, "command", json_string(command)) != 0) {
+		printf("error in json_object_set_new for command\n");
+		json_decref(msg);
+		return;
+	}
 	
-	msg_str = json_dumps((const json_t *)msg, 0);
+	// dump json object to string
+	msg_str = json_dumps(msg, 0);
+
 	json_decref(msg);
 
 	if (msg_str && strlen(msg_str)) {					
-		//poc_send_string(msg_str, strlen(msg_str));
+		poc_send_string(msg_str, strlen(msg_str));
 		free(msg_str);
 	} else {
 		printf("Error serializing JSON. Command=%s\n", command); 
 	}
 }
 
-void poc_send_string (char *databuf, U16 datalen) {
+void poc_send_string(const char *databuf, U16 datalen) {
 	U8 *sendbuf;
 	U16 maxlen = tcp_max_dsize(client_sock);
 
@@ -247,8 +263,4 @@ void poc_send_string (char *databuf, U16 datalen) {
 	memcpy(sendbuf, databuf, datalen);
 	tcp_send(client_sock, sendbuf, datalen);
 	printf("message sent\n");
-}
-
-void abort(void) {
-	printf("abort() called\n");
 }

@@ -5,6 +5,8 @@
 #include <string.h>	// memcpy
 #include <stdlib.h>	// malloc
 
+extern char *strdup (const char *s);
+
 struct int80_message {
     char *command;
 	json_t *params;
