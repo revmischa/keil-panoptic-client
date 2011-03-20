@@ -193,7 +193,7 @@ void poc_parse_message(const U8 *msg_str, U16 msg_len) {
 
 	// create message object
 	msg = int80_alloc_message();
-	printf("msg 1 =%X\n", msg);	 
+	//printf("msg 1 =%X\n", msg);	 
 	if (int80_parse_message(msg_json, msg)) {
 		printf("msg 2 =%X\n", msg);
 		// got a message we can use!

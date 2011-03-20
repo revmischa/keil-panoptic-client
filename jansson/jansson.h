@@ -80,7 +80,7 @@ void json_decref(json_t *json)
 
 /* getters, setters, manipulation */
 
-unsigned int json_object_size(const json_t *object);
+int json_object_size(const json_t *object);
 json_t *json_object_get(const json_t *object, const char *key);
 int json_object_set_new(json_t *object, const char *key, json_t *value);
 int json_object_set_new_nocheck(json_t *object, const char *key, json_t *value);
