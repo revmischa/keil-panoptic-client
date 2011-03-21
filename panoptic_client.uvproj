@@ -596,37 +596,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>jansson</GroupName>
+          <GroupName>jansson-2.0</GroupName>
           <Files>
             <File>
               <FileName>dump.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\dump.c</FilePath>
+              <FilePath>.\jansson-2.0\src\dump.c</FilePath>
+            </File>
+            <File>
+              <FileName>error.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\jansson-2.0\src\error.c</FilePath>
             </File>
             <File>
               <FileName>hashtable.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\hashtable.c</FilePath>
+              <FilePath>.\jansson-2.0\src\hashtable.c</FilePath>
             </File>
             <File>
               <FileName>load.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\load.c</FilePath>
+              <FilePath>.\jansson-2.0\src\load.c</FilePath>
+            </File>
+            <File>
+              <FileName>memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\jansson-2.0\src\memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>pack_unpack.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\jansson-2.0\src\pack_unpack.c</FilePath>
             </File>
             <File>
               <FileName>strbuffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\strbuffer.c</FilePath>
+              <FilePath>.\jansson-2.0\src\strbuffer.c</FilePath>
             </File>
             <File>
               <FileName>utf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\utf.c</FilePath>
+              <FilePath>.\jansson-2.0\src\utf.c</FilePath>
             </File>
             <File>
               <FileName>value.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\value.c</FilePath>
+              <FilePath>.\jansson-2.0\src\value.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -972,7 +987,7 @@
               <MiscControls></MiscControls>
               <Define>RTX_KERNEL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Library;C:\StellarisWare;jansson;C:\StellarisWare\boards\ek-lm3s8962;..\luminary\RL\TCPnet\SRC</IncludePath>
+              <IncludePath>..\Library;C:\StellarisWare;C:\StellarisWare\boards\ek-lm3s8962;..\luminary\RL\TCPnet\SRC;.\jansson-2.0\src</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1271,37 +1286,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>jansson</GroupName>
+          <GroupName>jansson-2.0</GroupName>
           <Files>
             <File>
               <FileName>dump.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\dump.c</FilePath>
+              <FilePath>.\jansson-2.0\src\dump.c</FilePath>
+            </File>
+            <File>
+              <FileName>error.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\jansson-2.0\src\error.c</FilePath>
             </File>
             <File>
               <FileName>hashtable.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\hashtable.c</FilePath>
+              <FilePath>.\jansson-2.0\src\hashtable.c</FilePath>
             </File>
             <File>
               <FileName>load.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\load.c</FilePath>
+              <FilePath>.\jansson-2.0\src\load.c</FilePath>
+            </File>
+            <File>
+              <FileName>memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\jansson-2.0\src\memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>pack_unpack.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\jansson-2.0\src\pack_unpack.c</FilePath>
             </File>
             <File>
               <FileName>strbuffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\strbuffer.c</FilePath>
+              <FilePath>.\jansson-2.0\src\strbuffer.c</FilePath>
             </File>
             <File>
               <FileName>utf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\utf.c</FilePath>
+              <FilePath>.\jansson-2.0\src\utf.c</FilePath>
             </File>
             <File>
               <FileName>value.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\value.c</FilePath>
+              <FilePath>.\jansson-2.0\src\value.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1858,91 +1888,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>jansson</GroupName>
-          <GroupOption>
-            <CommonProperty>
-              <UseCPPCompiler>0</UseCPPCompiler>
-              <RVCTCodeConst>0</RVCTCodeConst>
-              <RVCTZI>0</RVCTZI>
-              <RVCTOtherData>0</RVCTOtherData>
-              <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>0</IncludeInBuild>
-              <AlwaysBuild>2</AlwaysBuild>
-              <GenerateAssemblyFile>2</GenerateAssemblyFile>
-              <AssembleAssemblyFile>2</AssembleAssemblyFile>
-              <PublicsOnly>2</PublicsOnly>
-              <StopOnExitCode>11</StopOnExitCode>
-              <CustomArgument></CustomArgument>
-              <IncludeLibraryModules></IncludeLibraryModules>
-            </CommonProperty>
-            <GroupArmAds>
-              <Cads>
-                <interw>2</interw>
-                <Optim>0</Optim>
-                <oTime>2</oTime>
-                <SplitLS>2</SplitLS>
-                <OneElfS>2</OneElfS>
-                <Strict>2</Strict>
-                <EnumInt>2</EnumInt>
-                <PlainCh>2</PlainCh>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <wLevel>0</wLevel>
-                <uThumb>2</uThumb>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Cads>
-              <Aads>
-                <interw>2</interw>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <thumb>2</thumb>
-                <SplitLS>2</SplitLS>
-                <SwStkChk>2</SwStkChk>
-                <NoWarn>2</NoWarn>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Aads>
-            </GroupArmAds>
-          </GroupOption>
+          <GroupName>jansson-2.0</GroupName>
           <Files>
             <File>
               <FileName>dump.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\dump.c</FilePath>
+              <FilePath>.\jansson-2.0\src\dump.c</FilePath>
+            </File>
+            <File>
+              <FileName>error.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\jansson-2.0\src\error.c</FilePath>
             </File>
             <File>
               <FileName>hashtable.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\hashtable.c</FilePath>
+              <FilePath>.\jansson-2.0\src\hashtable.c</FilePath>
             </File>
             <File>
               <FileName>load.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\load.c</FilePath>
+              <FilePath>.\jansson-2.0\src\load.c</FilePath>
+            </File>
+            <File>
+              <FileName>memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\jansson-2.0\src\memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>pack_unpack.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\jansson-2.0\src\pack_unpack.c</FilePath>
             </File>
             <File>
               <FileName>strbuffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\strbuffer.c</FilePath>
+              <FilePath>.\jansson-2.0\src\strbuffer.c</FilePath>
             </File>
             <File>
               <FileName>utf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\utf.c</FilePath>
+              <FilePath>.\jansson-2.0\src\utf.c</FilePath>
             </File>
             <File>
               <FileName>value.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\jansson\value.c</FilePath>
+              <FilePath>.\jansson-2.0\src\value.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -204,7 +204,7 @@ static void dhcp_check () {
 }
 
 void status(U8 lineNum, char *status) {
-	printf("setting status=%s\n", status);
+	//printf("setting status=%s\n", status);
 	strncpy((char *)lcd_text[lineNum], status, STATUS_MAX+1);
 	update_display();
 }

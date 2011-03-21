@@ -1,0 +1,3 @@
+[submodule "jansson-2.0"]
+	path = jansson-2.0
+	url = git@github.com:revmischa/jansson.git

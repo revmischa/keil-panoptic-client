@@ -99,7 +99,7 @@
 //   <i> Define max. number of user timers that will run at the same time.
 //   <i> Default: 0  (User timers disabled)
 #ifndef OS_TIMERCNT
- #define OS_TIMERCNT    0
+ #define OS_TIMERCNT    3
 #endif
 
 //   <o>ISR FIFO Queue size<4=>   4 entries  <8=>   8 entries

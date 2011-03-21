@@ -6,21 +6,30 @@ U8 poc_server_ip[4];
 U8 client_sock = 0;
 BOOL have_server_ip = 0;
 
-U64 poc_task_stack[800/8];
+U64 poc_task_stack[8000/8];
 
-static void poc_client_main(void);
+// declare messagebox to hold queue of messages to parse
+// holds a max of 32 messages
+os_mbx_declare(raw_message_queue, POC_RAW_MESSAGE_QUEUE_MAX);
+// memory pool to use for messages
+U32 raw_message_queue_pool[POC_RAW_MESSAGE_QUEUE_MAX * (sizeof(raw_message_t))/4 + 3];  // I don't know what the +3 is for.
+
+static void poc_client_main(void);						
 U16 static poc_tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par);
 static void poc_create_client_socket(void);
 static void poc_client_tcp_connect(void);
-void poc_parse_message(const U8 *msg_str, U16 msg_len);
+void poc_parse_message(const char *msg_str, unsigned int msg_len);
 void poc_send_string (const char *sendbuf, U16 maxlen);
 void poc_send_command(const char *command, const json_t *params);
 void poc_handle_command(message *msg);
 
 void init_poc(void) {
 	// create main panoptic client task
-	
 	os_tsk_create_user(poc_task, 0, &poc_task_stack, sizeof(poc_task_stack));
+
+	// initialize mailbox to receive network messages waiting to be parsed
+	// and processed
+	_init_box(raw_message_queue_pool, sizeof(raw_message_queue_pool), sizeof(raw_message_t));
 }
 
 static void poc_server_dns_handler(unsigned char event, unsigned char *ip) {
@@ -63,6 +72,8 @@ __task void poc_task(void) {
 
 static void poc_client_main(void) {
 	U8 state;
+	void *msg;
+	raw_message_t *raw_message;
 
 	if (! have_server_ip)
 		return; 
@@ -107,6 +118,21 @@ static void poc_client_main(void) {
   	} else {
 		printf("No client socket!\n");
 	}
+	
+	// check to see if we have any raw messages to parse and process
+	if (os_mbx_wait(raw_message_queue, &msg, 0xFFFF) == OS_R_TMO) {
+    	printf ("Wait message timeout!\n");
+    } else {
+    	// got a raw message to process
+		if (msg == NULL) {
+			printf("Got NULL message from queue\n");
+		} else {
+			raw_message = (raw_message_t *)msg; 
+			poc_parse_message(raw_message->msg, raw_message->msg_len);
+			free(raw_message->msg);
+    		free(raw_message);
+		}
+  	} 
 }
 
 static void poc_client_tcp_connect(void) {
@@ -129,7 +155,9 @@ U16 static poc_tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par) {
 			   
   U8 *recv_data;
 
-  printf("got event %u\n", evt);
+  raw_message_t *raw_message;
+
+  //printf("got event %u\n", evt);
 
   if (soc != client_sock) {
     return (0);
@@ -142,14 +170,18 @@ U16 static poc_tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par) {
 	  recv_data = malloc(par+1);
 	  memcpy(recv_data, ptr, par);
 	  recv_data[par] = '\0';
-	  status(5, (char *)recv_data);
+	  strncpy((char *)lcd_text[5], (char*)recv_data, STATUS_MAX+1);
 	  lcd_text[5][STATUS_MAX] = '\0';
 	  update_display();
-	  printf("Got data: %s\n", recv_data);
+	  //printf("Got data: %s\n", recv_data);
 
-	  poc_parse_message(recv_data, par);
+	  // add this message to the poc message queue
+	  raw_message = _alloc_box(raw_message_queue_pool);
+	  raw_message->msg = (char *)recv_data;
+	  raw_message->msg_len = par;
+	  os_mbx_send(raw_message_queue, raw_message, 0xffff);
 
-	  free(recv_data);
+	  //free(recv_data);    // recv_data should get freed once it's processed by the poc task
       break;
 
     case TCP_EVT_CONREQ:
@@ -174,13 +206,15 @@ U16 static poc_tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par) {
   return (0);
 }
 
-void poc_parse_message(const U8 *msg_str, U16 msg_len) {
+void poc_parse_message(const char *msg_str, unsigned int msg_len) {
 	json_t *msg_json;
 	json_error_t err;
 	message *msg;
 
+	printf("got raw message len=%u, '%s'\n", msg_len, msg_str);
+
 	// parse json into object
-	msg_json = json_loads((char *)msg_str, &err);
+	msg_json = json_loads((char *)msg_str, 0, &err);
 	if (! msg_json) {
 		printf("Failed to parse message");
 		if (err.text != NULL) {
@@ -193,30 +227,25 @@ void poc_parse_message(const U8 *msg_str, U16 msg_len) {
 
 	// create message object
 	msg = int80_alloc_message();
-	//printf("msg 1 =%X\n", msg);	 
+	printf("msg 1 %X\n", msg);	 
 	if (int80_parse_message(msg_json, msg)) {
-		printf("msg 2 =%X\n", msg);
 		// got a message we can use!
-		status(5, "before parsing...");
-		printf("parse success!!!! &command=%X, command='%s' len=%u, json refcount=%d\n", msg->command, msg->command, strlen(msg->command), msg_json->refcount);			  
+		printf("parse success!!!! &command=%lX, command='%s' len=%u, json refcount=%d\n", (char*)msg->command, (char*)msg->command, strlen(msg->command), msg_json->refcount);			  
 		status(5, msg->command);
 		poc_handle_command(msg);
 	} else {											  
 		printf("Did not receive a message we understood\n");
 	}		
 	
-	printf("freeing message=%X. params=%X, params refcnt=%d\n", msg, msg->params, msg->params->refcount);
 	int80_free_message(msg);
-	printf("decref, msg_json=%X, refcnt=%d\n", msg_json, msg_json->refcount);
-	json_decref(msg_json);
-	printf("decref done\n\n");												
+	json_decref(msg_json);								
 }
 
 void poc_handle_command(message *msg) {
 	if (strcmp(msg->command, "ping") == 0) {
 		poc_send_command("pong", NULL);
 	} else {
-		printf("Got unknown command: %s\n", msg->command);
+		printf("Got unknown command (%lX): %s\n", msg->command, msg->command);
 		return;
 	}
 }
@@ -257,10 +286,10 @@ void poc_send_string(const char *databuf, U16 datalen) {
 		// TODO: fragment message
 	}
 
-	printf("sending message size=%u msg=%s\n\n", datalen, databuf);
+	//printf("sending message size=%u msg=%s\n\n", datalen, databuf);
 
     sendbuf = tcp_get_buf(datalen);
 	memcpy(sendbuf, databuf, datalen);
 	tcp_send(client_sock, sendbuf, datalen);
-	printf("message sent\n");
+	//printf("message sent\n");
 }

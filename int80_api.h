@@ -1,22 +1,20 @@
 #ifndef __INT80_API_H__
 #define __INT80_API_H__
 
-#include "jansson/jansson.h"
+#include "jansson.h"
 #include <string.h>	// memcpy
 #include <stdlib.h>	// malloc
 
-extern char *strdup (const char *s);
+extern char *strdup(const char *s);
 
-struct int80_message {
+typedef struct {
     char *command;
 	json_t *params;
 
 	short params_copied;
 	short command_copied;
 	short params_ref;
-};
-
-typedef struct int80_message int80_message;
+} int80_message;
 
 int80_message* int80_alloc_message(void);
 void int80_free_message(int80_message*);
